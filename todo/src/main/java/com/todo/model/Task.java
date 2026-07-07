@@ -1,9 +1,6 @@
 package com.todo.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.Transient;
+import jakarta.persistence.*;
 
 import java.time.LocalDate;
 
@@ -23,6 +20,7 @@ public class Task {
     private LocalDate actualStartDate;
     private LocalDate actualEndDate;
 
+    @Enumerated(EnumType.STRING)
     private Status status;
 
     @Transient
