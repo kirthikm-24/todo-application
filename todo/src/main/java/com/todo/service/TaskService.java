@@ -1,6 +1,7 @@
 package com.todo.service;
 
 import com.todo.model.Task;
+import com.todo.repository.TaskRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -8,43 +9,34 @@ import java.util.List;
 
 @Service
 public class TaskService {
-    private List<Task> tasks = new ArrayList<>();
+    private final TaskRepository taskRepository;
 
-    private Long nextId=1L;
+    public TaskService(TaskRepository taskRepository){
+        this.taskRepository=taskRepository;
+    }
 
     public List<Task> getAllTasks() {
-        return tasks;
+        return taskRepository.findAll();
     }
 
     public Task getTaskById (Long id) {
-        return tasks.stream()
-                .filter(task -> task.getId().equals(id))
-                .findFirst()
-                .orElse(null);
+        return taskRepository.findById(id).orElse(null);
     }
 
     public Task addTask(Task task) {
-        task.setId(nextId);
-        nextId++;
-        tasks.add(task);
-        return task;
+        return taskRepository.save(task);
     }
 
     public Task updateTask(Long id, Task updatedTask) {
-        for(int i=0;i<tasks.size();i++) {
-            if(tasks.get(i).getId().equals(id)) {
-                tasks.set(i,updatedTask);
-                return updatedTask;
-            }
-        }
-        return null;
+        updatedTask.setId(id);
+        return taskRepository.save(updatedTask);
     }
 
     public void deleteTask(Long id) {
-        tasks.removeIf(task->task.getId().equals(id));
+        taskRepository.deleteById(id);
     }
 
     public void deleteAllTasks (){
-        tasks.clear();
+        taskRepository.deleteAll();
     }
 }
