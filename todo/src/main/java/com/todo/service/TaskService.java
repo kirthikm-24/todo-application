@@ -4,6 +4,7 @@ import com.todo.model.Task;
 import com.todo.repository.TaskRepository;
 import org.springframework.stereotype.Service;
 
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,11 +17,20 @@ public class TaskService {
     }
 
     public List<Task> getAllTasks() {
-        return taskRepository.findAll();
+        List<Task> tasks=taskRepository.findAll();
+        for(Task task:tasks){
+            String vibe=calculateVibe(task);
+            task.setVibe(vibe);
+        }
+        return tasks;
     }
 
     public Task getTaskById (Long id) {
-        return taskRepository.findById(id).orElse(null);
+        Task task = taskRepository.findById(id).orElse(null);
+        if(task==null) return null;
+        String vibe=calculateVibe(task);
+        task.setVibe(vibe);
+        return task;
     }
 
     public Task addTask(Task task) {
@@ -38,5 +48,13 @@ public class TaskService {
 
     public void deleteAllTasks (){
         taskRepository.deleteAll();
+    }
+
+    public String calculateVibe(Task task){
+        if(task.getActualEndDate()==null) return "PENDING";
+        long days= ChronoUnit.DAYS.between(task.getTentativeEndDate(),task.getActualEndDate());
+        if(days==0) return "DONE ON TIME";
+        if(days<0) return "DONE BEFORE TIME";
+        return "DELAYED BY " + days + " days";
     }
 }
