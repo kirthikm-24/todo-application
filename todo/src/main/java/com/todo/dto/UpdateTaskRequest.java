@@ -1,12 +1,16 @@
 package com.todo.dto;
 
 import com.todo.model.Status;
+import jakarta.validation.constraints.*;
+
 import java.time.LocalDate;
 
 public class UpdateTaskRequest {
+    @NotBlank
     private String name;
     private String description;
     private LocalDate tentativeStartDate;
+    @NotNull
     private LocalDate tentativeEndDate;
     private LocalDate actualStartDate;
     private LocalDate actualEndDate;

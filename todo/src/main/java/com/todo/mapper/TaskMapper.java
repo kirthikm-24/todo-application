@@ -26,6 +26,7 @@ public class TaskMapper {
         r.setDescription(t.getDescription());
         r.setTentativeEndDate(t.getTentativeEndDate());
         r.setActualEndDate(t.getActualEndDate());
+        r.setVibe(t.getVibe());
         return r;
     }
 }

@@ -1,11 +1,12 @@
 package com.todo.service;
 
+import com.todo.dto.*;
+import com.todo.mapper.TaskMapper;
 import com.todo.model.Task;
 import com.todo.repository.TaskRepository;
 import org.springframework.stereotype.Service;
 
 import java.time.temporal.ChronoUnit;
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -16,37 +17,38 @@ public class TaskService {
         this.taskRepository=taskRepository;
     }
 
-    public List<Task> getAllTasks() {
-        List<Task> tasks=taskRepository.findAll();
-        for(Task task:tasks){
+    public List<TaskResponse> getAllTasks() {
+        List<Task> tasks = taskRepository.findAll();
+
+        for (Task task : tasks) {
             task.setVibe(calculateVibe(task));
         }
-        return tasks;
+
+        return tasks.stream()
+                .map(TaskMapper::toResponse)
+                .toList();
     }
 
-    public Task getTaskById (Long id) {
+    public TaskResponse getTaskById (Long id) {
         Task task = taskRepository.findById(id).orElse(null);
         if(task==null) return null;
         task.setVibe(calculateVibe(task));
-        return task;
+        return TaskMapper.toResponse(task);
     }
 
-    public Task addTask(Task task) {
+    public TaskResponse addTask(CreateTaskRequest request) {
+        Task task= TaskMapper.toEntity(request);
         task.setVibe(calculateVibe(task));
-        return taskRepository.save(task);
+        taskRepository.save(task);
+        return TaskMapper.toResponse(task);
     }
 
-    public Task updateTask(Long id, Task updatedTask) {
+    public TaskResponse updateTask(Long id, UpdateTaskRequest updatedTaskRequest) {
         Task existing = taskRepository.findById(id).orElseThrow(()-> new RuntimeException("Task not found"));
-        existing.setName(updatedTask.getName());
-        existing.setDescription(updatedTask.getDescription());
-        existing.setTentativeStartDate(updatedTask.getTentativeStartDate());
-        existing.setTentativeEndDate(updatedTask.getTentativeEndDate());
-        existing.setActualStartDate(updatedTask.getActualStartDate());
-        existing.setActualEndDate(updatedTask.getActualEndDate());
-        existing.setStatus(updatedTask.getStatus());
+        TaskMapper.applyUpdate(updatedTaskRequest,existing);
         existing.setVibe(calculateVibe(existing));
-        return taskRepository.save(existing);
+        taskRepository.save(existing);
+        return TaskMapper.toResponse(existing);
     }
 
     public void deleteTask(Long id) {
@@ -59,7 +61,7 @@ public class TaskService {
 
     public String calculateVibe(Task task){
         if(task.getActualEndDate()==null) return "PENDING";
-        if(task.getTentativeEndDate()==null) return "DONE (No tentative date";
+        if(task.getTentativeEndDate()==null) return "DONE (No tentative date)";
         long days= ChronoUnit.DAYS.between(task.getTentativeEndDate(),task.getActualEndDate());
         if(days==0) return "DONE ON TIME";
         if(days<0) return "DONE BEFORE TIME";

@@ -1,7 +1,5 @@
 package com.todo.dto;
 
-import com.todo.model.Status;
-
 import java.time.LocalDate;
 
 public class TaskResponse {
@@ -45,4 +43,10 @@ public class TaskResponse {
         this.actualEndDate=actualEndDate;
     }
 
+    public String getVibe(){
+        return vibe;
+    }
+    public void setVibe(String vibe){
+        this.vibe=vibe;
+    }
 }

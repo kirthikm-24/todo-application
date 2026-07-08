@@ -1,15 +1,16 @@
 package com.todo.dto;
 
 import com.todo.model.Status;
-import org.antlr.v4.runtime.misc.NotNull;
-import org.springframework.lang.NonNull;
+import jakarta.validation.constraints.*;
 
 import java.time.LocalDate;
 
 public class CreateTaskRequest {
+    @NotBlank
     private String name;
     private String description;
     private LocalDate tentativeStartDate;
+    @NotNull
     private LocalDate tentativeEndDate;
     private LocalDate actualStartDate;
     private LocalDate actualEndDate;

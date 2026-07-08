@@ -1,7 +1,8 @@
 package com.todo.controller;
 
-import com.todo.model.Task;
+import com.todo.dto.*;
 import com.todo.service.TaskService;
+import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -16,22 +17,22 @@ public class TaskController {
     }
 
     @GetMapping
-    public List<Task> getTasks(){
+    public List<TaskResponse> getTasks() {
         return taskService.getAllTasks();
     }
 
     @GetMapping("/{id}")
-    public Task getTaskById(@PathVariable Long id) {
+    public TaskResponse getTaskById(@PathVariable Long id) {
         return taskService.getTaskById(id);
     }
 
     @PostMapping
-    public Task createTask(@RequestBody Task task){
-        return taskService.addTask(task);
+    public TaskResponse createTask(@Valid @RequestBody CreateTaskRequest request){
+        return taskService.addTask(request);
     }
 
     @PutMapping("/{id}")
-    public Task updateTask(@PathVariable Long id, @RequestBody Task task) {
+    public TaskResponse updateTask(@PathVariable Long id,@Valid @RequestBody UpdateTaskRequest task) {
         return taskService.updateTask(id,task);
     }
 
