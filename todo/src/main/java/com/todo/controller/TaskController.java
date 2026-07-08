@@ -3,6 +3,8 @@ package com.todo.controller;
 import com.todo.dto.*;
 import com.todo.service.TaskService;
 import jakarta.validation.Valid;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -22,13 +24,17 @@ public class TaskController {
     }
 
     @GetMapping("/{id}")
-    public TaskResponse getTaskById(@PathVariable Long id) {
-        return taskService.getTaskById(id);
+    public ResponseEntity<TaskResponse> getTaskById(@PathVariable Long id) {
+
+        TaskResponse response = taskService.getTaskById(id);
+        if(response==null) return ResponseEntity.notFound().build();
+        return ResponseEntity.ok(response);
     }
 
     @PostMapping
-    public TaskResponse createTask(@Valid @RequestBody CreateTaskRequest request){
-        return taskService.addTask(request);
+    public ResponseEntity<TaskResponse> createTask(@Valid @RequestBody CreateTaskRequest request){
+        TaskResponse response = taskService.addTask(request);
+        return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
     @PutMapping("/{id}")
@@ -37,14 +43,14 @@ public class TaskController {
     }
 
     @DeleteMapping ("/{id}")
-    public String deleteTask(@PathVariable Long id){
+    public ResponseEntity<Void> deleteTask(@PathVariable Long id){
         taskService.deleteTask(id);
-        return "Task deleted";
+        return ResponseEntity.noContent().build();
     }
 
     @DeleteMapping
-    public String deleteAllTasks (){
+    public ResponseEntity<Void> deleteAllTasks (){
         taskService.deleteAllTasks();
-        return "All tasks deleted";
+        return ResponseEntity.noContent().build();
     }
 }
