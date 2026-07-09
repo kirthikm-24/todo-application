@@ -1,6 +1,7 @@
 package com.todo.service;
 
 import com.todo.dto.*;
+import com.todo.exception.NotFoundException;
 import com.todo.mapper.TaskMapper;
 import com.todo.model.Task;
 import com.todo.repository.TaskRepository;
@@ -30,8 +31,7 @@ public class TaskService {
     }
 
     public TaskResponse getTaskById (Long id) {
-        Task task = taskRepository.findById(id).orElse(null);
-        if(task==null) return null;
+        Task task = taskRepository.findById(id).orElseThrow(()->new NotFoundException("Task not found with id: " + id));
         task.setVibe(calculateVibe(task));
         return TaskMapper.toResponse(task);
     }
@@ -44,7 +44,7 @@ public class TaskService {
     }
 
     public TaskResponse updateTask(Long id, UpdateTaskRequest updatedTaskRequest) {
-        Task existing = taskRepository.findById(id).orElseThrow(()-> new RuntimeException("Task not found"));
+        Task existing = taskRepository.findById(id).orElseThrow(()-> new NotFoundException("Task not found with id: " + id));
         TaskMapper.applyUpdate(updatedTaskRequest,existing);
         existing.setVibe(calculateVibe(existing));
         taskRepository.save(existing);
