@@ -35,6 +35,8 @@ public class TaskMapper {
         r.setId(t.getId());
         r.setName(t.getName());
         r.setDescription(t.getDescription());
+        r.setTentativeStartDate(t.getTentativeStartDate());
+        r.setActualStartDate(t.getActualStartDate());
         r.setTentativeEndDate(t.getTentativeEndDate());
         r.setActualEndDate(t.getActualEndDate());
         r.setVibe(calculateVibe(t));
