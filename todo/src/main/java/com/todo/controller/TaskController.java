@@ -25,16 +25,12 @@ public class TaskController {
 
     @GetMapping("/{id}")
     public ResponseEntity<TaskResponse> getTaskById(@PathVariable Long id) {
-
-        TaskResponse response = taskService.getTaskById(id);
-        if(response==null) return ResponseEntity.notFound().build();
-        return ResponseEntity.ok(response);
+        return ResponseEntity.ok(taskService.getTaskById(id));
     }
 
     @PostMapping
     public ResponseEntity<TaskResponse> createTask(@Valid @RequestBody CreateTaskRequest request){
-        TaskResponse response = taskService.addTask(request);
-        return ResponseEntity.status(HttpStatus.CREATED).body(response);
+        return ResponseEntity.status(HttpStatus.CREATED).body(taskService.addTask(request));
     }
 
     @PutMapping("/{id}")
