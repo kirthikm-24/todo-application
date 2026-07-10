@@ -24,10 +24,7 @@ public class Task {
     @Enumerated(EnumType.STRING)
     private Status status;
 
-    @Transient
-    private String vibe;
-
     public Task() {
     }
-    
+
 }

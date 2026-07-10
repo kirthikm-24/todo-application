@@ -1,9 +1,11 @@
 package com.todoapp.util;
 
 import com.todoapp.model.Task;
+import lombok.experimental.UtilityClass;
 
 import java.time.temporal.ChronoUnit;
 
+@UtilityClass
 public class TaskUtil {
     public static String calculateVibe(Task task) {
         if (task.getActualEndDate() == null) return "PENDING";

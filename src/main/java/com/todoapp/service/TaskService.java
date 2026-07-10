@@ -11,8 +11,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-import static com.todoapp.util.TaskUtil.calculateVibe;
-
 @Service
 public class TaskService {
     private final TaskRepository taskRepository;
@@ -24,10 +22,6 @@ public class TaskService {
     public List<TaskResponse> getAllTasks() {
         List<Task> tasks = taskRepository.findAll();
 
-        for (Task task : tasks) {
-            task.setVibe(calculateVibe(task));
-        }
-
         return tasks.stream()
                 .map(TaskMapper::toResponse)
                 .toList();
@@ -35,13 +29,11 @@ public class TaskService {
 
     public TaskResponse getTaskById(Long id) {
         Task task = taskRepository.findById(id).orElseThrow(() -> new NotFoundException("Task not found with id: " + id));
-        task.setVibe(calculateVibe(task));
         return TaskMapper.toResponse(task);
     }
 
     public TaskResponse addTask(CreateTaskRequest request) {
         Task task = TaskMapper.toEntity(request);
-        task.setVibe(calculateVibe(task));
         taskRepository.save(task);
         return TaskMapper.toResponse(task);
     }
@@ -49,7 +41,6 @@ public class TaskService {
     public TaskResponse updateTask(Long id, UpdateTaskRequest updatedTaskRequest) {
         Task existing = taskRepository.findById(id).orElseThrow(() -> new NotFoundException("Task not found with id: " + id));
         TaskMapper.applyUpdate(updatedTaskRequest, existing);
-        existing.setVibe(calculateVibe(existing));
         taskRepository.save(existing);
         return TaskMapper.toResponse(existing);
     }

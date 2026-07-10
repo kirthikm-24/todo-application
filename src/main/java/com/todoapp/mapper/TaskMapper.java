@@ -5,6 +5,8 @@ import com.todoapp.dto.TaskResponse;
 import com.todoapp.dto.UpdateTaskRequest;
 import com.todoapp.model.Task;
 
+import static com.todoapp.util.TaskUtil.calculateVibe;
+
 public class TaskMapper {
     public static Task toEntity(CreateTaskRequest d) {
         Task t = new Task();
@@ -35,7 +37,7 @@ public class TaskMapper {
         r.setDescription(t.getDescription());
         r.setTentativeEndDate(t.getTentativeEndDate());
         r.setActualEndDate(t.getActualEndDate());
-        r.setVibe(t.getVibe());
+        r.setVibe(calculateVibe(t));
         r.setStatus(t.getStatus());
         return r;
     }
