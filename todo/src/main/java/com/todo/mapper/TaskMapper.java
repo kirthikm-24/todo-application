@@ -11,6 +11,7 @@ public class TaskMapper {
         t.setName(d.getName());
         t.setDescription(d.getDescription());
         t.setTentativeEndDate(d.getTentativeEndDate());
+        t.setStatus(d.getStatus());
         return t;
     }
     public static void applyUpdate(UpdateTaskRequest d, Task existing){
@@ -18,6 +19,7 @@ public class TaskMapper {
         existing.setDescription(d.getDescription());
         existing.setTentativeEndDate(d.getTentativeEndDate());
         existing.setActualEndDate(d.getActualEndDate());
+        existing.setStatus(d.getStatus());
     }
     public static TaskResponse toResponse(Task t){
         TaskResponse r=new TaskResponse();
@@ -27,6 +29,7 @@ public class TaskMapper {
         r.setTentativeEndDate(t.getTentativeEndDate());
         r.setActualEndDate(t.getActualEndDate());
         r.setVibe(t.getVibe());
+        r.setStatus(t.getStatus());
         return r;
     }
 }

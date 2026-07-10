@@ -1,5 +1,7 @@
 package com.todo.dto;
 
+import com.todo.model.Status;
+
 import java.time.LocalDate;
 
 public class TaskResponse {
@@ -9,6 +11,7 @@ public class TaskResponse {
     private LocalDate tentativeEndDate;
     private LocalDate actualEndDate;
     private String vibe;
+    private Status status;
 
     public Long getId(){
         return id;
@@ -48,5 +51,12 @@ public class TaskResponse {
     }
     public void setVibe(String vibe){
         this.vibe=vibe;
+    }
+
+    public Status getStatus(){
+        return status;
+    }
+    public void setStatus(Status status){
+        this.status=status;
     }
 }
