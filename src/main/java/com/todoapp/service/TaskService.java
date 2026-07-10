@@ -9,8 +9,9 @@ import com.todoapp.model.Task;
 import com.todoapp.repository.TaskRepository;
 import org.springframework.stereotype.Service;
 
-import java.time.temporal.ChronoUnit;
 import java.util.List;
+
+import static com.todoapp.util.TaskUtil.calculateVibe;
 
 @Service
 public class TaskService {
@@ -64,12 +65,4 @@ public class TaskService {
         taskRepository.deleteAll();
     }
 
-    public String calculateVibe(Task task) {
-        if (task.getActualEndDate() == null) return "PENDING";
-        if (task.getTentativeEndDate() == null) return "DONE (No tentative date)";
-        long days = ChronoUnit.DAYS.between(task.getTentativeEndDate(), task.getActualEndDate());
-        if (days == 0) return "DONE ON TIME";
-        if (days < 0) return "DONE BEFORE TIME";
-        return "DELAYED BY " + days + " days";
-    }
 }
