@@ -13,21 +13,26 @@ public class TaskResponse {
     private String vibe;
     private Status status;
 
-    public Long getId(){
+    public Long getId() {
         return id;
     }
+
     public void setId(Long id) {
-        this.id=id;
+        this.id = id;
     }
-    public String getName(){
+
+    public String getName() {
         return name;
     }
-    public void setName(String name){
-        this.name=name;
+
+    public void setName(String name) {
+        this.name = name;
     }
+
     public String getDescription() {
         return description;
     }
+
     public void setDescription(String description) {
         this.description = description;
     }
@@ -35,28 +40,32 @@ public class TaskResponse {
     public LocalDate getTentativeEndDate() {
         return tentativeEndDate;
     }
-    public void setTentativeEndDate(LocalDate tentativeEndDate){
-        this.tentativeEndDate=tentativeEndDate;
+
+    public void setTentativeEndDate(LocalDate tentativeEndDate) {
+        this.tentativeEndDate = tentativeEndDate;
     }
 
     public LocalDate getActualEndDate() {
         return actualEndDate;
     }
-    public void setActualEndDate(LocalDate actualEndDate){
-        this.actualEndDate=actualEndDate;
+
+    public void setActualEndDate(LocalDate actualEndDate) {
+        this.actualEndDate = actualEndDate;
     }
 
-    public String getVibe(){
+    public String getVibe() {
         return vibe;
     }
-    public void setVibe(String vibe){
-        this.vibe=vibe;
+
+    public void setVibe(String vibe) {
+        this.vibe = vibe;
     }
 
-    public Status getStatus(){
+    public Status getStatus() {
         return status;
     }
-    public void setStatus(Status status){
-        this.status=status;
+
+    public void setStatus(Status status) {
+        this.status = status;
     }
 }

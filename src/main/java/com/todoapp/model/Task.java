@@ -1,6 +1,7 @@
 package com.todoapp.model;
 
 import jakarta.persistence.*;
+
 import java.time.LocalDate;
 
 @Entity
@@ -22,28 +23,34 @@ public class Task {
     @Transient
     private String vibe;
 
-    public Task(){}
+    public Task() {
+    }
 
 //    public Task(Long id, String name) {
 //        this.id=id;
 //        this.name=name;
 //    }
 
-    public Long getId(){
+    public Long getId() {
         return id;
     }
+
     public void setId(Long id) {
-        this.id=id;
+        this.id = id;
     }
-    public String getName(){
+
+    public String getName() {
         return name;
     }
-    public void setName(String name){
-        this.name=name;
+
+    public void setName(String name) {
+        this.name = name;
     }
+
     public String getDescription() {
         return description;
     }
+
     public void setDescription(String description) {
         this.description = description;
     }
@@ -51,37 +58,48 @@ public class Task {
     public LocalDate getTentativeStartDate() {
         return tentativeStartDate;
     }
-    public void setTentativeStartDate(LocalDate tentativeStartDate){
-        this.tentativeStartDate=tentativeStartDate;
+
+    public void setTentativeStartDate(LocalDate tentativeStartDate) {
+        this.tentativeStartDate = tentativeStartDate;
     }
+
     public LocalDate getTentativeEndDate() {
         return tentativeEndDate;
     }
-    public void setTentativeEndDate(LocalDate tentativeEndDate){
-        this.tentativeEndDate=tentativeEndDate;
+
+    public void setTentativeEndDate(LocalDate tentativeEndDate) {
+        this.tentativeEndDate = tentativeEndDate;
     }
+
     public LocalDate getActualStartDate() {
         return actualStartDate;
     }
-    public void setActualStartDate(LocalDate actualStartDate){
-        this.actualStartDate=actualStartDate;
+
+    public void setActualStartDate(LocalDate actualStartDate) {
+        this.actualStartDate = actualStartDate;
     }
+
     public LocalDate getActualEndDate() {
         return actualEndDate;
     }
-    public void setActualEndDate(LocalDate actualEndDate){
-        this.actualEndDate=actualEndDate;
+
+    public void setActualEndDate(LocalDate actualEndDate) {
+        this.actualEndDate = actualEndDate;
     }
-    public Status getStatus(){
+
+    public Status getStatus() {
         return status;
     }
-    public void setStatus(Status status){
-        this.status=status;
+
+    public void setStatus(Status status) {
+        this.status = status;
     }
-    public String getVibe(){
+
+    public String getVibe() {
         return vibe;
     }
-    public void setVibe(String vibe){
-        this.vibe=vibe;
+
+    public void setVibe(String vibe) {
+        this.vibe = vibe;
     }
 }
