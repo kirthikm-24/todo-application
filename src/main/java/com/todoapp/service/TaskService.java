@@ -7,6 +7,7 @@ import com.todoapp.exception.NotFoundException;
 import com.todoapp.mapper.TaskMapper;
 import com.todoapp.model.Task;
 import com.todoapp.repository.TaskRepository;
+import com.todoapp.util.TaskUtil;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -34,6 +35,8 @@ public class TaskService {
 
     public TaskResponse addTask(CreateTaskRequest request) {
         Task task = TaskMapper.toEntity(request);
+        TaskUtil.validate(task);
+        task.setStatus(TaskUtil.calculateStatus(task));
         taskRepository.save(task);
         return TaskMapper.toResponse(task);
     }
@@ -41,6 +44,8 @@ public class TaskService {
     public TaskResponse updateTask(Long id, UpdateTaskRequest updatedTaskRequest) {
         Task existing = taskRepository.findById(id).orElseThrow(() -> new NotFoundException("Task not found with id: " + id));
         TaskMapper.applyUpdate(updatedTaskRequest, existing);
+        TaskUtil.validate(existing);
+        existing.setStatus(TaskUtil.calculateStatus(existing));
         taskRepository.save(existing);
         return TaskMapper.toResponse(existing);
     }

@@ -16,7 +16,6 @@ public class TaskMapper {
         t.setTentativeEndDate(d.getTentativeEndDate());
         t.setActualStartDate(d.getActualStartDate());
         t.setActualEndDate(d.getActualEndDate());
-        t.setStatus(d.getStatus());
         return t;
     }
 
@@ -27,7 +26,6 @@ public class TaskMapper {
         existing.setTentativeEndDate(d.getTentativeEndDate());
         existing.setActualStartDate(d.getActualStartDate());
         existing.setActualEndDate(d.getActualEndDate());
-        existing.setStatus(d.getStatus());
     }
 
     public static TaskResponse toResponse(Task t) {

@@ -1,6 +1,5 @@
 package com.todoapp.dto;
 
-import com.todoapp.model.Status;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
@@ -14,11 +13,11 @@ public class CreateTaskRequest {
     @NotBlank
     private String name;
     private String description;
+    @NotNull
     private LocalDate tentativeStartDate;
     @NotNull
     private LocalDate tentativeEndDate;
     private LocalDate actualStartDate;
     private LocalDate actualEndDate;
-    private Status status;
 
 }

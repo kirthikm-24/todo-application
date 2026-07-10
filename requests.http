@@ -8,7 +8,8 @@ Content-Type: application/json
 {
   "name": "Learn Spring Boot",
   "description": "Complete Phase A",
-  "tentativeEndDate": "2026-07-20"
+  "tentativeEndDate": "2026-07-20",
+  "tentativeStartDate": "2026-07-14"
 }
 
 ### Create task - MISSING NAME (400)
