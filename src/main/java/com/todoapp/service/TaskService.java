@@ -1,10 +1,10 @@
-package com.todo.service;
+package com.todoapp.service;
 
-import com.todo.dto.*;
-import com.todo.exception.NotFoundException;
-import com.todo.mapper.TaskMapper;
-import com.todo.model.Task;
-import com.todo.repository.TaskRepository;
+import com.todoapp.dto.*;
+import com.todoapp.exception.NotFoundException;
+import com.todoapp.mapper.TaskMapper;
+import com.todoapp.model.Task;
+import com.todoapp.repository.TaskRepository;
 import org.springframework.stereotype.Service;
 
 import java.time.temporal.ChronoUnit;

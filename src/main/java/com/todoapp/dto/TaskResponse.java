@@ -1,21 +1,24 @@
-package com.todo.dto;
+package com.todoapp.dto;
 
-import com.todo.model.Status;
-import jakarta.validation.constraints.*;
+import com.todoapp.model.Status;
 
 import java.time.LocalDate;
 
-public class CreateTaskRequest {
-    @NotBlank
+public class TaskResponse {
+    private Long id;
     private String name;
     private String description;
-    private LocalDate tentativeStartDate;
-    @NotNull
     private LocalDate tentativeEndDate;
-    private LocalDate actualStartDate;
     private LocalDate actualEndDate;
+    private String vibe;
     private Status status;
 
+    public Long getId(){
+        return id;
+    }
+    public void setId(Long id) {
+        this.id=id;
+    }
     public String getName(){
         return name;
     }
@@ -28,30 +31,28 @@ public class CreateTaskRequest {
     public void setDescription(String description) {
         this.description = description;
     }
-    public LocalDate getTentativeStartDate() {
-        return tentativeStartDate;
-    }
-    public void setTentativeStartDate(LocalDate tentativeStartDate){
-        this.tentativeStartDate=tentativeStartDate;
-    }
+
     public LocalDate getTentativeEndDate() {
         return tentativeEndDate;
     }
     public void setTentativeEndDate(LocalDate tentativeEndDate){
         this.tentativeEndDate=tentativeEndDate;
     }
-    public LocalDate getActualStartDate() {
-        return actualStartDate;
-    }
-    public void setActualStartDate(LocalDate actualStartDate){
-        this.actualStartDate=actualStartDate;
-    }
+
     public LocalDate getActualEndDate() {
         return actualEndDate;
     }
     public void setActualEndDate(LocalDate actualEndDate){
         this.actualEndDate=actualEndDate;
     }
+
+    public String getVibe(){
+        return vibe;
+    }
+    public void setVibe(String vibe){
+        this.vibe=vibe;
+    }
+
     public Status getStatus(){
         return status;
     }

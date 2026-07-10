@@ -1,17 +1,33 @@
-package com.todo.dto;
+package com.todoapp.model;
 
-import com.todo.model.Status;
-
+import jakarta.persistence.*;
 import java.time.LocalDate;
 
-public class TaskResponse {
+@Entity
+public class Task {
+
+    @Id
+    @GeneratedValue
     private Long id;
     private String name;
     private String description;
+    private LocalDate tentativeStartDate;
     private LocalDate tentativeEndDate;
+    private LocalDate actualStartDate;
     private LocalDate actualEndDate;
-    private String vibe;
+
+    @Enumerated(EnumType.STRING)
     private Status status;
+
+    @Transient
+    private String vibe;
+
+    public Task(){}
+
+//    public Task(Long id, String name) {
+//        this.id=id;
+//        this.name=name;
+//    }
 
     public Long getId(){
         return id;
@@ -32,31 +48,40 @@ public class TaskResponse {
         this.description = description;
     }
 
+    public LocalDate getTentativeStartDate() {
+        return tentativeStartDate;
+    }
+    public void setTentativeStartDate(LocalDate tentativeStartDate){
+        this.tentativeStartDate=tentativeStartDate;
+    }
     public LocalDate getTentativeEndDate() {
         return tentativeEndDate;
     }
     public void setTentativeEndDate(LocalDate tentativeEndDate){
         this.tentativeEndDate=tentativeEndDate;
     }
-
+    public LocalDate getActualStartDate() {
+        return actualStartDate;
+    }
+    public void setActualStartDate(LocalDate actualStartDate){
+        this.actualStartDate=actualStartDate;
+    }
     public LocalDate getActualEndDate() {
         return actualEndDate;
     }
     public void setActualEndDate(LocalDate actualEndDate){
         this.actualEndDate=actualEndDate;
     }
-
-    public String getVibe(){
-        return vibe;
-    }
-    public void setVibe(String vibe){
-        this.vibe=vibe;
-    }
-
     public Status getStatus(){
         return status;
     }
     public void setStatus(Status status){
         this.status=status;
+    }
+    public String getVibe(){
+        return vibe;
+    }
+    public void setVibe(String vibe){
+        this.vibe=vibe;
     }
 }

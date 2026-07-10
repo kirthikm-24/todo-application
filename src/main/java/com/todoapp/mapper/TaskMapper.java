@@ -1,9 +1,9 @@
-package com.todo.mapper;
+package com.todoapp.mapper;
 
-import com.todo.dto.CreateTaskRequest;
-import com.todo.dto.TaskResponse;
-import com.todo.dto.UpdateTaskRequest;
-import com.todo.model.Task;
+import com.todoapp.dto.CreateTaskRequest;
+import com.todoapp.dto.TaskResponse;
+import com.todoapp.dto.UpdateTaskRequest;
+import com.todoapp.model.Task;
 
 public class TaskMapper {
     public static Task toEntity(CreateTaskRequest d){

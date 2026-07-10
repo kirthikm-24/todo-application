@@ -1,0 +1,63 @@
+### Get all tasks
+GET http://localhost:8080/todos
+
+### Create task - VALID (on time expected)
+POST http://localhost:8080/todos
+Content-Type: application/json
+
+{
+  "name": "Learn Spring Boot",
+  "description": "Complete Phase A",
+  "tentativeEndDate": "2026-07-20"
+}
+
+### Create task - MISSING NAME (400)
+POST http://localhost:8080/todos
+Content-Type: application/json
+
+{
+  "name": "",
+  "description": "Should fail",
+  "tentativeEndDate": "2026-07-20"
+}
+
+### Create task - MISSING TENTATIVE DATE (400)
+POST http://localhost:8080/todos
+Content-Type: application/json
+
+{
+  "name": "No tentative date",
+  "description": "Should fail"
+}
+
+### Get task by valid ID
+GET http://localhost:8080/todos/1
+
+### Get task by invalid ID (404)
+GET http://localhost:8080/todos/999
+
+### Update task - VALID
+PUT http://localhost:8080/todos/1
+Content-Type: application/json
+
+{
+  "name": "Updated task",
+  "description": "Updated description",
+  "tentativeEndDate": "2026-07-25",
+  "actualEndDate": "2026-07-25"
+}
+
+### Update task - NOT FOUND (404)
+PUT http://localhost:8080/todos/999
+Content-Type: application/json
+
+{
+  "name": "Update nonexistent",
+  "tentativeEndDate": "2026-07-20"
+}
+
+### Delete task by ID (204)
+DELETE http://localhost:8080/todos/1
+
+### Delete all tasks (204)
+DELETE http://localhost:8080/todos

@@ -1,4 +1,4 @@
-package com.todo.model;
+package com.todoapp.model;
 
 public enum Status {
     SCHEDULED,

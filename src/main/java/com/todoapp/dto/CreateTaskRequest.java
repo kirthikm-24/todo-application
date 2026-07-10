@@ -1,11 +1,11 @@
-package com.todo.dto;
+package com.todoapp.dto;
 
-import com.todo.model.Status;
+import com.todoapp.model.Status;
 import jakarta.validation.constraints.*;
 
 import java.time.LocalDate;
 
-public class UpdateTaskRequest {
+public class CreateTaskRequest {
     @NotBlank
     private String name;
     private String description;
@@ -28,7 +28,6 @@ public class UpdateTaskRequest {
     public void setDescription(String description) {
         this.description = description;
     }
-
     public LocalDate getTentativeStartDate() {
         return tentativeStartDate;
     }

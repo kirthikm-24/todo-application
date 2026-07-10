@@ -1,7 +1,7 @@
-package com.todo.controller;
+package com.todoapp.controller;
 
-import com.todo.dto.*;
-import com.todo.service.TaskService;
+import com.todoapp.dto.*;
+import com.todoapp.service.TaskService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

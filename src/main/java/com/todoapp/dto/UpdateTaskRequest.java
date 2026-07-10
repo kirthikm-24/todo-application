@@ -1,43 +1,21 @@
-package com.todo.model;
+package com.todoapp.dto;
 
-import jakarta.persistence.*;
+import com.todoapp.model.Status;
+import jakarta.validation.constraints.*;
+
 import java.time.LocalDate;
 
-@Entity
-public class Task {
-
-    @Id
-    @GeneratedValue
-    private Long id;
-
+public class UpdateTaskRequest {
+    @NotBlank
     private String name;
-
     private String description;
-
     private LocalDate tentativeStartDate;
+    @NotNull
     private LocalDate tentativeEndDate;
     private LocalDate actualStartDate;
     private LocalDate actualEndDate;
-
-    @Enumerated(EnumType.STRING)
     private Status status;
 
-    @Transient
-    private String vibe;
-
-    public Task(){}
-
-    public Task(Long id, String name) {
-        this.id=id;
-        this.name=name;
-    }
-
-    public Long getId(){
-        return id;
-    }
-    public void setId(Long id) {
-        this.id=id;
-    }
     public String getName(){
         return name;
     }
@@ -80,11 +58,5 @@ public class Task {
     }
     public void setStatus(Status status){
         this.status=status;
-    }
-    public String getVibe(){
-        return vibe;
-    }
-    public void setVibe(String vibe){
-        this.vibe=vibe;
     }
 }
