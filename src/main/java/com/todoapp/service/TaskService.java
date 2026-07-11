@@ -21,15 +21,14 @@ public class TaskService {
     }
 
     public List<TaskResponse> getAllTasks() {
-        List<Task> tasks = taskRepository.findAll();
-
-        return tasks.stream()
+        return taskRepository.findByDeletedFalse()
+                .stream()
                 .map(TaskMapper::toResponse)
                 .toList();
     }
 
     public TaskResponse getTaskById(Long id) {
-        Task task = taskRepository.findById(id).orElseThrow(() -> new NotFoundException("Task not found with id: " + id));
+        Task task = taskRepository.findByIdAndDeletedFalse(id).orElseThrow(() -> new NotFoundException("Task not found with id: " + id));
         return TaskMapper.toResponse(task);
     }
 
@@ -42,7 +41,7 @@ public class TaskService {
     }
 
     public TaskResponse updateTask(Long id, UpdateTaskRequest updatedTaskRequest) {
-        Task existing = taskRepository.findById(id).orElseThrow(() -> new NotFoundException("Task not found with id: " + id));
+        Task existing = taskRepository.findByIdAndDeletedFalse(id).orElseThrow(() -> new NotFoundException("Task not found with id: " + id));
         TaskMapper.applyUpdate(updatedTaskRequest, existing);
         TaskUtil.validate(existing);
         existing.setStatus(TaskUtil.calculateStatus(existing));
@@ -51,14 +50,15 @@ public class TaskService {
     }
 
     public void deleteTask(Long id) {
-        if (!taskRepository.existsById(id)) {
-            throw new NotFoundException("Task not found with id: " + id);
-        }
-        taskRepository.deleteById(id);
+        Task task = taskRepository.findByIdAndDeletedFalse(id).orElseThrow(() -> new NotFoundException("Task not found with id: " + id));
+        task.setDeleted(true);
+        taskRepository.save(task);
     }
 
     public void deleteAllTasks() {
-        taskRepository.deleteAll();
+        List<Task> tasks = taskRepository.findByDeletedFalse();
+        tasks.forEach(task -> task.setDeleted(true));
+        taskRepository.saveAll(tasks);
     }
 
 }

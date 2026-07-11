@@ -9,7 +9,9 @@ Content-Type: application/json
   "name": "Learn Spring Boot",
   "description": "Complete Phase A",
   "tentativeEndDate": "2026-07-20",
-  "tentativeStartDate": "2026-07-14"
+  "tentativeStartDate": "2026-07-14",
+  "actualStartDate": "2026-07-15",
+  "actualEndDate": "2026-07-22"
 }
 
 ### Create task - MISSING NAME (400)
@@ -38,14 +40,15 @@ GET http://localhost:8080/todos/1
 GET http://localhost:8080/todos/999
 
 ### Update task - VALID
-PUT http://localhost:8080/todos/1
+PUT http://localhost:8080/todos/3
 Content-Type: application/json
 
 {
   "name": "Updated task",
   "description": "Updated description",
+  "tentativeStartDate": "2026-07-20",
   "tentativeEndDate": "2026-07-25",
-  "actualEndDate": "2026-07-25"
+  "actualStartDate": "2026-07-25"
 }
 
 ### Update task - NOT FOUND (404)

@@ -20,6 +20,7 @@ public class Task {
     private LocalDate tentativeEndDate;
     private LocalDate actualStartDate;
     private LocalDate actualEndDate;
+    private boolean deleted = false;
 
     @Enumerated(EnumType.STRING)
     private Status status;
