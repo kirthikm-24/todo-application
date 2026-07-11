@@ -4,41 +4,17 @@ import com.todoapp.dto.CreateTaskRequest;
 import com.todoapp.dto.TaskResponse;
 import com.todoapp.dto.UpdateTaskRequest;
 import com.todoapp.model.Task;
+import com.todoapp.util.TaskUtil;
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
+import org.mapstruct.MappingTarget;
 
-import static com.todoapp.util.TaskUtil.calculateVibe;
+@Mapper(componentModel = "spring", imports = TaskUtil.class)
+public interface TaskMapper {
+    Task toEntity(CreateTaskRequest request);
 
-public class TaskMapper {
-    public static Task toEntity(CreateTaskRequest d) {
-        Task t = new Task();
-        t.setName(d.getName());
-        t.setDescription(d.getDescription());
-        t.setTentativeStartDate(d.getTentativeStartDate());
-        t.setTentativeEndDate(d.getTentativeEndDate());
-        t.setActualStartDate(d.getActualStartDate());
-        t.setActualEndDate(d.getActualEndDate());
-        return t;
-    }
+    void applyUpdate(UpdateTaskRequest request, @MappingTarget Task task);
 
-    public static void applyUpdate(UpdateTaskRequest d, Task existing) {
-        existing.setName(d.getName());
-        existing.setDescription(d.getDescription());
-        existing.setTentativeStartDate(d.getTentativeStartDate());
-        existing.setTentativeEndDate(d.getTentativeEndDate());
-        existing.setActualStartDate(d.getActualStartDate());
-        existing.setActualEndDate(d.getActualEndDate());
-    }
-
-    public static TaskResponse toResponse(Task t) {
-        TaskResponse r = new TaskResponse();
-        r.setId(t.getId());
-        r.setName(t.getName());
-        r.setDescription(t.getDescription());
-        r.setTentativeStartDate(t.getTentativeStartDate());
-        r.setActualStartDate(t.getActualStartDate());
-        r.setTentativeEndDate(t.getTentativeEndDate());
-        r.setActualEndDate(t.getActualEndDate());
-        r.setVibe(calculateVibe(t));
-        r.setStatus(t.getStatus());
-        return r;
-    }
+    @Mapping(target = "vibe", expression = "java(TaskUtil.calculateVibe(task))")
+    TaskResponse toResponse(Task task);
 }
