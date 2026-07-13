@@ -9,6 +9,7 @@ import com.todoapp.model.Task;
 import com.todoapp.repository.TaskRepository;
 import com.todoapp.util.TaskUtil;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -22,6 +23,7 @@ public class TaskService {
         this.taskMapper = taskMapper;
     }
 
+    @Transactional(readOnly = true)
     public List<TaskResponse> getAllTasks() {
         return taskRepository.findByDeletedFalse()
                 .stream()
@@ -29,11 +31,13 @@ public class TaskService {
                 .toList();
     }
 
+    @Transactional(readOnly = true)
     public TaskResponse getTaskById(Long id) {
         Task task = taskRepository.findByIdAndDeletedFalse(id).orElseThrow(() -> new NotFoundException("Task not found with id: " + id));
         return taskMapper.toResponse(task);
     }
 
+    @Transactional
     public TaskResponse addTask(CreateTaskRequest request) {
         Task task = taskMapper.toEntity(request);
         TaskUtil.validate(task);
@@ -42,6 +46,7 @@ public class TaskService {
         return taskMapper.toResponse(task);
     }
 
+    @Transactional
     public TaskResponse updateTask(Long id, UpdateTaskRequest updatedTaskRequest) {
         Task existing = taskRepository.findByIdAndDeletedFalse(id).orElseThrow(() -> new NotFoundException("Task not found with id: " + id));
         taskMapper.applyUpdate(updatedTaskRequest, existing);
@@ -51,12 +56,14 @@ public class TaskService {
         return taskMapper.toResponse(existing);
     }
 
+    @Transactional
     public void deleteTask(Long id) {
         Task task = taskRepository.findByIdAndDeletedFalse(id).orElseThrow(() -> new NotFoundException("Task not found with id: " + id));
         task.setDeleted(true);
         taskRepository.save(task);
     }
 
+    @Transactional
     public void deleteAllTasks() {
         List<Task> tasks = taskRepository.findByDeletedFalse();
         tasks.forEach(task -> task.setDeleted(true));
