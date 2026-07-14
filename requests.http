@@ -1,67 +1,254 @@
-### Get all tasks
+### ============================================================
+### TODO APP API DEMO REQUESTS
+### ============================================================
+
+### ------------------------------------------------------------
+### 1. Get all tasks (Initially empty)
+### ------------------------------------------------------------
 GET http://localhost:8080/todos
 
-### Create task - VALID (on time expected)
+
+### ------------------------------------------------------------
+### 2. Create - Scheduled Task
+### Status: SCHEDULED
+### Vibe: PENDING
+### ------------------------------------------------------------
 POST http://localhost:8080/todos
 Content-Type: application/json
 
 {
-  "name": "Learn Spring Boot",
-  "description": "Complete Phase A",
-  "tentativeEndDate": "2026-07-20",
-  "tentativeStartDate": "2026-07-14",
-  "actualStartDate": "2026-07-15",
-  "actualEndDate": "2026-07-22"
+  "name": "Design API",
+  "description": "Design REST endpoints",
+  "tentativeStartDate": "2026-07-15",
+  "tentativeEndDate": "2026-07-20"
 }
 
-### Create task - MISSING NAME (400)
+
+### ------------------------------------------------------------
+### 3. Create - In Progress Task
+### Status: IN_PROGRESS
+### Vibe: PENDING
+### ------------------------------------------------------------
+POST http://localhost:8080/todos
+Content-Type: application/json
+
+{
+  "name": "Implement Service Layer",
+  "description": "Write business logic",
+  "tentativeStartDate": "2026-07-15",
+  "tentativeEndDate": "2026-07-20",
+  "actualStartDate": "2026-07-16"
+}
+
+
+### ------------------------------------------------------------
+### 4. Create - Completed Before Time
+### Status: COMPLETED
+### Vibe: DONE BEFORE TIME
+### ------------------------------------------------------------
+POST http://localhost:8080/todos
+Content-Type: application/json
+
+{
+  "name": "Write Unit Tests",
+  "description": "Mockito + JUnit",
+  "tentativeStartDate": "2026-07-15",
+  "tentativeEndDate": "2026-07-20",
+  "actualStartDate": "2026-07-15",
+  "actualEndDate": "2026-07-18"
+}
+
+
+### ------------------------------------------------------------
+### 5. Create - Completed On Time
+### Status: COMPLETED
+### Vibe: DONE ON TIME
+### ------------------------------------------------------------
+POST http://localhost:8080/todos
+Content-Type: application/json
+
+{
+  "name": "Complete Documentation",
+  "description": "Prepare project docs",
+  "tentativeStartDate": "2026-07-15",
+  "tentativeEndDate": "2026-07-20",
+  "actualStartDate": "2026-07-15",
+  "actualEndDate": "2026-07-20"
+}
+
+
+### ------------------------------------------------------------
+### 6. Create - Completed Late
+### Status: COMPLETED
+### Vibe: DELAYED BY 4 DAYS
+### ------------------------------------------------------------
+POST http://localhost:8080/todos
+Content-Type: application/json
+
+{
+  "name": "Deploy Application",
+  "description": "Production deployment",
+  "tentativeStartDate": "2026-07-15",
+  "tentativeEndDate": "2026-07-20",
+  "actualStartDate": "2026-07-16",
+  "actualEndDate": "2026-07-24"
+}
+
+
+### ------------------------------------------------------------
+### 7. Get all tasks
+### Observe different Status and Vibe values
+### ------------------------------------------------------------
+GET http://localhost:8080/todos
+
+
+### ------------------------------------------------------------
+### 8. Get task by valid ID
+### ------------------------------------------------------------
+GET http://localhost:8080/todos/1
+
+
+### ------------------------------------------------------------
+### 9. Get task by invalid ID
+### Expected: 404 Not Found
+### ------------------------------------------------------------
+GET http://localhost:8080/todos/999
+
+
+### ------------------------------------------------------------
+### 10. Validation - Blank Name
+### Expected: 400 Bad Request
+### ------------------------------------------------------------
 POST http://localhost:8080/todos
 Content-Type: application/json
 
 {
   "name": "",
-  "description": "Should fail",
+  "description": "Validation test",
+  "tentativeStartDate": "2026-07-15",
   "tentativeEndDate": "2026-07-20"
 }
 
-### Create task - MISSING TENTATIVE DATE (400)
+
+### ------------------------------------------------------------
+### 11. Validation - Missing Tentative Dates
+### Expected: 400 Bad Request
+### ------------------------------------------------------------
 POST http://localhost:8080/todos
 Content-Type: application/json
 
 {
-  "name": "No tentative date",
-  "description": "Should fail"
+  "name": "Missing Dates",
+  "description": "Should fail validation"
 }
 
-### Get task by valid ID
-GET http://localhost:8080/todos/1
 
-### Get task by invalid ID (404)
-GET http://localhost:8080/todos/999
-
-### Update task - VALID
-PUT http://localhost:8080/todos/3
+### ------------------------------------------------------------
+### 12. Business Validation - Invalid Date Range
+### tentativeStartDate > tentativeEndDate
+### Expected: 400 Bad Request
+### ------------------------------------------------------------
+POST http://localhost:8080/todos
 Content-Type: application/json
 
 {
-  "name": "Updated task",
-  "description": "Updated description",
-  "tentativeStartDate": "2026-07-20",
-  "tentativeEndDate": "2026-07-25",
-  "actualStartDate": "2026-07-25"
+  "name": "Invalid Dates",
+  "description": "Business validation",
+  "tentativeStartDate": "2026-07-25",
+  "tentativeEndDate": "2026-07-20"
 }
 
-### Update task - NOT FOUND (404)
+
+### ------------------------------------------------------------
+### 13. Update Scheduled Task -> In Progress
+### Status changes automatically
+### ------------------------------------------------------------
+PUT http://localhost:8080/todos/1
+Content-Type: application/json
+
+{
+  "name": "Design API",
+  "description": "Started implementation",
+  "tentativeStartDate": "2026-07-15",
+  "tentativeEndDate": "2026-07-20",
+  "actualStartDate": "2026-07-16"
+}
+
+
+### ------------------------------------------------------------
+### 14. Update In Progress -> Completed On Time
+### Status and Vibe change automatically
+### ------------------------------------------------------------
+PUT http://localhost:8080/todos/1
+Content-Type: application/json
+
+{
+  "name": "Design API",
+  "description": "Completed successfully",
+  "tentativeStartDate": "2026-07-15",
+  "tentativeEndDate": "2026-07-20",
+  "actualStartDate": "2026-07-16",
+  "actualEndDate": "2026-07-20"
+}
+
+
+### ------------------------------------------------------------
+### 15. Update Non-existent Task
+### Expected: 404 Not Found
+### ------------------------------------------------------------
 PUT http://localhost:8080/todos/999
 Content-Type: application/json
 
 {
-  "name": "Update nonexistent",
-  "tentativeEndDate": "2026-07-20"
+  "name": "Does not exist"
 }
 
-### Delete task by ID (204)
-DELETE http://localhost:8080/todos/1
 
-### Delete all tasks (204)
+### ------------------------------------------------------------
+### 16. Delete Task by ID (Soft Delete)
+### Expected: 204 No Content
+### ------------------------------------------------------------
+DELETE http://localhost:8080/todos/2
+
+
+### ------------------------------------------------------------
+### 17. Verify Soft Delete
+### Deleted task should not appear
+### ------------------------------------------------------------
+GET http://localhost:8080/todos
+
+
+### ------------------------------------------------------------
+### 18. Delete Already Deleted Task
+### Expected: 404 Not Found (if implemented)
+### ------------------------------------------------------------
+DELETE http://localhost:8080/todos/2
+
+
+### ------------------------------------------------------------
+### 19. Delete All Tasks
+### Expected: 204 No Content
+### ------------------------------------------------------------
 DELETE http://localhost:8080/todos
+
+
+### ------------------------------------------------------------
+### 20. Verify All Tasks Deleted
+### ------------------------------------------------------------
+GET http://localhost:8080/todos
+
+
+### ============================================================
+### H2 DATABASE QUERIES
+### ============================================================
+
+-- View all tasks (including soft-deleted)
+
+-- View only active tasks
+SELECT * FROM task WHERE deleted = false;
+
+-- View soft-deleted tasks
+SELECT * FROM task WHERE deleted = true;
+
+-- Check status/vibe related fields
+SELECT id, name, status, deleted FROM task;
